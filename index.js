@@ -14,11 +14,6 @@ const squares = document.querySelectorAll(".game-grid-square");
 let player_of_the_turn = 0;
 let symbol = 0;
 
-// Initializes first player as the X player
-player_of_the_turn = player_X;
-symbol = "X";
-player_X_name.classList.add("green-style");
-
 // ------------------------------------------------------------
 // Start button verifies if names are not empty and then starts game
 const start_button = document.getElementById("start-button");
@@ -28,6 +23,47 @@ start_button.addEventListener("click", function () {
   } else {
     startGame();
   }
+});
+
+// ------------------------------------------------------------
+// Start Game function
+function startGame() {
+  // Hides the input form for the names
+  document
+    .getElementById("input-players-names")
+    .style.setProperty("display", "none");
+
+  // Shows players names
+  player_X_name.innerText = player_X.value;
+  player_O_name.innerText = player_O.value;
+  document
+    .getElementById("players-names-section")
+    .style.setProperty("display", "flex");
+
+  enableBoard();
+  initializePlayerX();
+
+  // Alert indicating first player
+  alert("Primeiro a jogar: " + player_X.value);
+}
+
+// ------------------------------------------------------------
+// Event Listerner for clicks on the squares to fill them
+// with X or O and disable them afterwards during the game
+// so user won't be able to select them again
+// Every click it verifies if there's a winner already
+squares.forEach(function (square) {
+  square.addEventListener("click", function () {
+    square.innerHTML = "<p>" + symbol + "</p>"; // Insert a <p> to apply style when there's a winner
+    square.disabled = true;
+
+    if (verifyWinner()) {
+      return; // Returns here if there's a winner to stop players from being switched and the winner stays highlighted
+    }
+
+    // Switches players after each click
+    player_of_the_turn = switchPlayers(player_of_the_turn);
+  });
 });
 
 // ------------------------------------------------------------
@@ -56,44 +92,6 @@ new_game_button.addEventListener("click", function () {
   resetBoard();
   disableBoard();
 });
-
-// ------------------------------------------------------------
-// Start Game function
-function startGame() {
-  // Hides the input form for the names
-  document
-    .getElementById("input-players-names")
-    .style.setProperty("display", "none");
-
-  // Shows players names
-  player_X_name.innerText = player_X.value;
-  player_O_name.innerText = player_O.value;
-  document
-    .getElementById("players-names-section")
-    .style.setProperty("display", "flex");
-
-  // Alert indicating first player
-  alert("Primeiro a jogar: " + player_X.value);
-
-  // ------------------------------------------------------------
-  // Event Listerner for clicks on the squares to fill them
-  // with X or O and disable them afterwards during the game
-  // so user won't be able to select them again
-  // Every click it verifies if there's a winner already
-  squares.forEach(function (square) {
-    square.addEventListener("click", function () {
-      square.innerHTML = "<p>" + symbol + "</p>"; // Insert a <p> to apply style when there's a winner
-      square.disabled = true;
-
-      if (verifyWinner()) {
-        return; // Returns here if there's a winner to stop players from being switched and the winner stays highlighted
-      }
-
-      // Switches players after each click
-      player_of_the_turn = switchPlayers(player_of_the_turn);
-    });
-  });
-}
 
 // ------------------------------------------------------------
 // Verify Winner function starts verifying if square is not empty
@@ -287,19 +285,25 @@ function verifyWinner() {
 // 6 7 8
 
 // ------------------------------------------------------------
-// Switch Players function
-function switchPlayers(player_of_the_turn) {
-  if (player_of_the_turn === player_X) {
-    symbol = "O";
-    player_X_name.classList.remove("green-style");
-    player_O_name.classList.add("green-style");
-    return player_O;
-  } else {
-    symbol = "X";
-    player_X_name.classList.add("green-style");
-    player_O_name.classList.remove("green-style");
-    return player_X;
-  }
+// Restarts the game
+function restartGame() {
+  resetBoard();
+  enableBoard();
+  initializePlayerX();
+}
+
+// ------------------------------------------------------------
+// Cleans the board
+function resetBoard() {
+  // Erases the symbols from the board
+  squares.forEach(function (square) {
+    square.innerText = "";
+  });
+
+  // Removes green-style class from the board
+  squares.forEach(function (square) {
+    square.classList.remove("green-style");
+  });
 }
 
 // ------------------------------------------------------------
@@ -319,29 +323,26 @@ function disableBoard() {
 }
 
 // ------------------------------------------------------------
-// Restarts the game
-function restartGame() {
-  resetBoard();
-
-  // Initializes player as the X player
+// Initializes player as the X player
+function initializePlayerX() {
   player_of_the_turn = player_X;
   symbol = "X";
   player_X_name.classList.add("green-style");
   player_O_name.classList.remove("green-style");
-
-  enableBoard();
 }
 
 // ------------------------------------------------------------
-// Cleans the board
-function resetBoard() {
-  // Erases the symbols from the board
-  squares.forEach(function (square) {
-    square.innerText = "";
-  });
-
-  // Removes green-style class from the board
-  squares.forEach(function (square) {
-    square.classList.remove("green-style");
-  });
+// Switch Players function
+function switchPlayers(player_of_the_turn) {
+  if (player_of_the_turn === player_X) {
+    symbol = "O";
+    player_X_name.classList.remove("green-style");
+    player_O_name.classList.add("green-style");
+    return player_O;
+  } else {
+    symbol = "X";
+    player_X_name.classList.add("green-style");
+    player_O_name.classList.remove("green-style");
+    return player_X;
+  }
 }
