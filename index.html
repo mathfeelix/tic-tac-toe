@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- FONTES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./style.css" />
+
+    <title>Jogo da Velha</title>
+  </head>
+  <body>
+    <header>
+      <h1>Jogo da Velha</h1>
+      <hr />
+    </header>
+
+    <main class="display-flex align-center justify-center">
+      <!-- Input players names section -->
+      <section class="display-flex-column" id="input-players-names">
+        <div class="display-flex-column">
+          <label for="player-X">Jogador X:</label>
+          <input type="text" name="player-X" id="player-X" />
+        </div>
+
+        <div class="display-flex-column">
+          <label for="player-O">Jogador O:</label>
+          <input type="text" name="player-O" id="player-O" />
+        </div>
+
+        <button id="start-button">Iniciar</button>
+      </section>
+
+      <!-- Players names sections. Starts as display: none and shows up when names are chosen -->
+      <section class="display-flex-column" id="players-names-section">
+        <div class="display-flex">
+          <h2>Jogador X:</h2>
+          <h2 id="player-X-name"></h2>
+        </div>
+
+        <div class="display-flex">
+          <h2>Jogador O:</h2>
+          <h2 id="player-O-name"></h2>
+        </div>
+
+        <button id="restart-button">Reiniciar Partida</button>
+        <button id="new-game-button">Novo Jogo</button>
+      </section>
+
+      <!-- Tic Tac Toe Grid -->
+      <section class="display-flex">
+        <div id="game-grid">
+          <button
+            class="game-grid-square no-border-top no-border-left"
+            id="square-1"
+          ></button>
+          <button
+            class="game-grid-square no-border-top"
+            id="square-2"
+          ></button>
+          <button
+            class="game-grid-square no-border-top no-border-right"
+            id="square-3"
+          ></button>
+          <button
+            class="game-grid-square no-border-left"
+            id="square-4"
+          ></button>
+          <button class="game-grid-square" id="square-5"></button>
+          <button
+            class="game-grid-square no-border-right"
+            id="square-6"
+          ></button>
+          <button
+            class="game-grid-square no-border-bottom no-border-left"
+            id="square-7"
+          ></button>
+          <button
+            class="game-grid-square no-border-bottom"
+            id="square-8"
+          ></button>
+          <button
+            class="game-grid-square no-border-right no-border-bottom"
+            id="square-9"
+          ></button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Javascript -->
+    <script src="./index.js"></script>
+  </body>
+</html>
