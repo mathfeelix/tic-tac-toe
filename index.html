@@ -40,7 +40,10 @@
       </section>
 
       <!-- Players names sections. Starts as display: none and shows up when names are chosen -->
-      <section class="display-flex-column display-none" id="players-names-section">
+      <section
+        class="display-flex-column display-none"
+        id="players-names-section"
+      >
         <div class="display-flex">
           <h2>Jogador X:</h2>
           <h2 id="player-X-name"></h2>
@@ -58,7 +61,8 @@
       <!-- Winner section. Starts as display: none and shows up when there's a winner -->
       <section class="display-flex-column display-none" id="winner-section">
         <div class="display-flex">
-          <h2>Vencedor: <span id="winner-name"></span></h2>
+          <!-- Includes "tie" or name of the winner dynamically with js -->
+          <h2 id="winner-text"></h2>
         </div>
 
         <button id="restart-button">Reiniciar Partida</button>

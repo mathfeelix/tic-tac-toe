@@ -43,9 +43,6 @@ function startGame() {
 
   enableBoard();
   initializePlayerX();
-
-  // Alert indicating first player
-  alert("Primeiro a jogar: " + player_X.value);
 }
 
 // ------------------------------------------------------------
@@ -58,9 +55,7 @@ squares.forEach(function (square) {
     square.innerHTML = "<p>" + symbol + "</p>"; // Insert a <p> to apply style when there's a winner
     square.disabled = true;
 
-    if (verifyWinner()) {
-      return; // Returns here for in case of a tie there isn't a switch of players
-    }
+    verifyWinner();
 
     // Switches players after each click
     player_of_the_turn = switchPlayers(player_of_the_turn);
@@ -121,7 +116,7 @@ function verifyWinner() {
       squares[0].innerText === squares[2].innerText
     ) {
       showWinner(winner, squares[0], squares[1], squares[2]);
-      return true;
+      return;
     }
   }
 
@@ -135,7 +130,7 @@ function verifyWinner() {
       squares[3].innerText === squares[5].innerText
     ) {
       showWinner(winner, squares[3], squares[4], squares[5]);
-      return true;
+      return;
     }
   }
 
@@ -149,7 +144,7 @@ function verifyWinner() {
       squares[6].innerText === squares[8].innerText
     ) {
       showWinner(winner, squares[6], squares[7], squares[8]);
-      return true;
+      return;
     }
   }
 
@@ -163,7 +158,7 @@ function verifyWinner() {
       squares[0].innerText === squares[6].innerText
     ) {
       showWinner(winner, squares[0], squares[3], squares[6]);
-      return true;
+      return;
     }
   }
 
@@ -177,7 +172,7 @@ function verifyWinner() {
       squares[1].innerText === squares[7].innerText
     ) {
       showWinner(winner, squares[1], squares[4], squares[7]);
-      return true;
+      return;
     }
   }
 
@@ -191,7 +186,7 @@ function verifyWinner() {
       squares[2].innerText === squares[8].innerText
     ) {
       showWinner(winner, squares[2], squares[5], squares[8]);
-      return true;
+      return;
     }
   }
 
@@ -205,7 +200,7 @@ function verifyWinner() {
       squares[0].innerText === squares[8].innerText
     ) {
       showWinner(winner, squares[0], squares[4], squares[8]);
-      return true;
+      return;
     }
   }
 
@@ -219,7 +214,7 @@ function verifyWinner() {
       squares[2].innerText === squares[6].innerText
     ) {
       showWinner(winner, squares[2], squares[4], squares[6]);
-      return true;
+      return;
     }
   }
 
@@ -235,21 +230,23 @@ function verifyWinner() {
     squares[7].innerText !== "" &&
     squares[8].innerText !== ""
   ) {
-    alert("===============\nEMPATE!!!\n===============");
-    player_X_name.classList.remove("green-style");
-    player_O_name.classList.remove("green-style");
-    return true;
+    // Hides players names and shows winner section
+    players_names_section.style.setProperty("display", "none");
+    winner_section.style.setProperty("display", "flex");
+
+    // Includes "tie" to the HTML
+    document.getElementById("winner-text").innerText = "Empate!";
   }
 }
 
 function showWinner(winner, square_1, square_2, square_3) {
-  // Hides players names
+  // Hides players names and shows winner section
   players_names_section.style.setProperty("display", "none");
-
-  // Shows winner section
   winner_section.style.setProperty("display", "flex");
 
   // Includes name of the winner to the HTML and highlights it
+  document.getElementById("winner-text").innerHTML =
+    "Vencedor: <span id='winner-name'></span>";
   document.getElementById("winner-name").innerText = winner.value;
   document.getElementById("winner-name").classList.add("green-style");
 
@@ -261,7 +258,7 @@ function showWinner(winner, square_1, square_2, square_3) {
   disableBoard();
 }
 
-// Model with the indexes of the array from the board
+// Model with the indexes of the array of the board
 // 0 1 2
 // 3 4 5
 // 6 7 8
